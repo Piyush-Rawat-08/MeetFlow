@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styles from '../styles/videoMeet.module.css';
 
-export default function VideoComponent({ localVideoRef, videos }) {
+function VideoComponent({ localVideoRef, videos }) {
   return (
     <>
       <video
@@ -24,7 +24,7 @@ export default function VideoComponent({ localVideoRef, videos }) {
               className={videos.length === 1 ? styles.expandedVideo : styles.conferenceVideo}
               data-socket={video.socketId}
               ref={(ref) => {
-                if (ref && video.stream) {
+                if (ref && video.stream && ref.srcObject !== video.stream) {
                   ref.srcObject = video.stream;
                 }
               }}
@@ -37,3 +37,4 @@ export default function VideoComponent({ localVideoRef, videos }) {
     </>
   );
 }
+export default memo(VideoComponent);

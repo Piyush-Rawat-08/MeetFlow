@@ -30,7 +30,7 @@ export default function ChatBox({ closeChat, messages, socket, username }) {
         ) : (
           messages.map((msg, index) => (
             <div key={index} style={{ marginBottom: "10px" }}>
-              <span style={{ fontWeight: "bold", fontSize: "0.9rem" }}>{msg.sender}</span>
+              <span style={{ fontWeight: "bold", fontSize: "0.9rem", color: "black" }}>{msg.sender}</span>
               <p
                 style={{
                   margin: 0,
