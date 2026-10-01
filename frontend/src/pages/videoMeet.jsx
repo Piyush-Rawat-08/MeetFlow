@@ -66,9 +66,19 @@ export default function VideoMeet() {
       try {
         const meetingCode = window.location.pathname.split('/').pop();
         const response = await client.get(`/get_meeting_info/${meetingCode}`);
-
-        setMeetingTitle(response.data.title);
+        const fetchedTitle = response.data.title;
+        setMeetingTitle(fetchedTitle);
         setAttendeesCount(response.data.attendeesCount);
+        const loggedInUser = localStorage.getItem("username");
+        if (loggedInUser && fetchedTitle && fetchedTitle !== "Loading...") {
+          await client.post('/add_to_activity', {
+            user_id: loggedInUser,
+            meeting_id: meetingCode,
+            title: fetchedTitle,
+            isScheduled: false,
+            date: new Date(),
+          });
+        }
       } catch (error) {
         console.log("Error fetching meeting info", error);
         if (meetingTitle === "Loading...") {
@@ -554,8 +564,22 @@ export default function VideoMeet() {
       if (isRecording) {
         stopRecording();
       }
-      let tracks = localVideoRef.current.srcObject.getTracks();
-      tracks.forEach((track) => track.stop());
+      if (localVideoRef.current?.srcObject) {
+        localVideoRef.current.srcObject.getTracks().forEach((track) => track.stop());
+      }
+      if (window.localStream) {
+        window.localStream.getTracks().forEach((track) => track.stop());
+      }
+      const loggedInUser = localStorage.getItem("username");
+      const meetingCode = window.location.pathname.split("/").pop();
+      if (loggedInUser && meetingTitle && meetingTitle !== "Loading...") {
+        await client.post("/add_to_activity", {
+          user_id: loggedInUser,
+          meeting_id: meetingCode,
+          title: meetingTitle,
+          isScheduled: false,
+        });
+      }
     } catch (e) {
       console.log(e);
     }

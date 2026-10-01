@@ -41,8 +41,24 @@ function HomeComponent() {
         }
     };
 
+    const fetchHistory = async () => {
+        try {
+            const currentUserId = userId || localStorage.getItem("username");
+            if (!currentUserId) return;
+            const res = await client.get(`/get_all_activity?user_id=${currentUserId}`);
+            setHistory(res.data.history || []);
+        }
+        catch (e) {
+            console.log("error in fetching history", e);
+        }
+    };
+
     useEffect(() => {
-        fetchRecordings();
+        const currentUserId = userId || localStorage.getItem("username");
+        if (currentUserId) {
+            fetchHistory();
+            fetchRecordings();
+        }
     }, [userId]);
 
     const handleDeleteRecording = async (id) => {
@@ -153,16 +169,6 @@ function HomeComponent() {
         navigate("/");
     };
 
-    const fetchHistory = async () => {
-        try {
-            const res = await client.get(`get_all_activity?user_id=${userId}`);
-            setHistory(res.data.history || []);
-        }
-        catch (e) {
-            console.log("error in fetching history", e);
-        }
-    };
-
     const handleDeleteMeeting = async (meetingId) => {
         try {
             if (!window.confirm("Are you sure you want to delete this meeting from history?")) return;
@@ -177,8 +183,11 @@ function HomeComponent() {
 
     const handleSidebarClick = (tab) => {
         setActiveTab(tab);
-        if (tab === "history" || tab === "scheduled") {
+        if (tab === "history" || tab === "scheduled" || tab === "dashboard") {
             fetchHistory();
+        }
+        if (tab === "recordings" || tab === "dashboard") {
+            fetchRecordings();
         }
     };
 
@@ -375,12 +384,12 @@ function HomeComponent() {
                             <div className="recent-activities-section">
                                 {/* Up Next (Meetings) */}
                                 <div className="recent-meetings-column">
-                                    <h3 className="section-title-dash">UP NEXT</h3>
+                                    <h3 className="section-title-dash">Recent Meetings</h3>
                                     <div className="vertical-meetings-list">
-                                        {history.filter(m => m.status === "scheduled").slice(0, 2).length === 0 ? (
-                                            <p className="empty-subtext">No upcoming meetings</p>
+                                        {history.filter(m => m.status !== "scheduled").slice(0, 2).length === 0 ? (
+                                            <p className="empty-subtext">No Recent Meetings</p>
                                         ) : (
-                                            history.filter(m => m.status === "scheduled").slice(0, 2).map(meeting => (
+                                            history.filter(m => m.status !== "scheduled").slice(0, 2).map(meeting => (
                                                 <div key={meeting._id} className="dash-meeting-card light-card">
                                                     <div className="dash-meeting-info">
                                                         <h4>{meeting.title}</h4>
@@ -388,9 +397,11 @@ function HomeComponent() {
                                                             {new Date(meeting.scheduled_for || Date.now()).toLocaleDateString()} • {meeting.guests ? meeting.guests.length : 2} guests
                                                         </p>
                                                     </div>
-                                                    <button className="join-now-btn" onClick={() => handleJoinMeeting(meeting.meeting_id, meeting.title)}>
-                                                        Join
-                                                    </button>
+                                                    {meeting.status !== "completed" && (
+                                                        <button className="join-now-btn" onClick={() => handleJoinMeeting(meeting.meeting_id, meeting.title)}>
+                                                            Join
+                                                        </button>
+                                                    )}
                                                 </div>
                                             ))
                                         )}

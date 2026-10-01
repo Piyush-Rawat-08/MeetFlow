@@ -95,6 +95,16 @@ const connectToSocket = (server) => {
             if (connections[key].length === 0) {
               const meetingCode = key.split("/").pop();
               try {
+                const hostMeeting = await Meeting.findOne({
+                  meeting_id: meetingCode,
+                  title: { $nin: ["Joined Meeting", "Instant Meeting"] },
+                });
+                if (hostMeeting && hostMeeting.title) {
+                  await Meeting.updateMany(
+                    { meeting_id: meetingCode, title: "Joined Meeting" },
+                    { title: hostMeeting.title }
+                  );
+                }
                 await Meeting.updateMany(
                   { meeting_id: meetingCode },
                   { status: "completed", ended_at: Date.now() }
