@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from '../styles/videoMeet.module.css';
 import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import VideocamOffIcon from '@mui/icons-material/VideocamOff';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 
 export default function VideoLobby({
@@ -18,6 +19,44 @@ export default function VideoLobby({
     meetingTitle,
     attendeesCount,
 }) {
+
+    const [copied, setCopied] = useState(false);
+
+    const meetingCode = window.location.pathname.split("/").filter(Boolean).pop();
+
+    const fallbackCopy = (text) => {
+        try {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-999999px";
+            textArea.style.top = "-999999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            document.exeCommand("copy");
+            document.body.removeChild(textArea);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch (err) {
+            console.error("failed to copy code :", err);
+        }
+    };
+
+    const handleCopyCode = () => {
+        if (navigator?.clipboard?.writeText) {
+            navigator.clipboard.writeText(meetingCode)
+                .then(() => {
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                })
+                .catch(() => fallbackCopy(meetingCode));
+        } else {
+            fallbackCopy(meetingCode);
+        }
+    }
+
 
     const toggleAudio = () => {
         const newState = !audioAvailable;
@@ -47,20 +86,33 @@ export default function VideoLobby({
                         <img
                             src="/meetflow_logo.png"
                             alt="MeetFlow Logo"
-                            style={{ width: '60px', height: '60px', borderRadius: '8px', marginRight: '5px' }}
+                            className={styles.lobbyLogo}
                         />
                         <span className={styles.lobbyLogoText}>MeetFlow</span>
                     </div>
                     <h2 className={styles.meetingTitle}>{meetingTitle}</h2>
                     <div className={styles.meetingDetails}>
-                        <span className={styles.detailBadge}>Ready to Join</span>
+                        <span className={styles.detailBadge}>
+                            <span className={styles.pulseDot}></span>
+                            Ready to Join
+                        </span>
                         {attendeesCount > 0 && (
                             <span className={styles.detailBadge}>
-                                {attendeesCount}waiting
+                                {attendeesCount} waiting
                             </span>
                         )}
                     </div>
+                    <button
+                        type="button"
+                        onClick={handleCopyCode}
+                        className={styles.lobbyCopyBtn}
+                        title="Click to copy meeting code"
+                    >
+                        <ContentCopyIcon style={{ fontSize: "0.95rem" }} />
+                        <span>{copied ? "Code copied!" : `Code: ${meetingCode}`}</span>
+                    </button>
                 </div>
+
                 <div className={styles.videoPreviewWrapper}>
                     <video className={styles.videoPreview}
                         ref={(ref) => {

@@ -19,6 +19,7 @@ import ChatBox from "../components/ChatBox";
 import VideoComponent from "../components/VideoComponent";
 import VideoLobby from "../components/videoLobby";
 import { client } from "../contexts/AuthContext";
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 
 const server_url = "http://localhost:8000";
@@ -60,6 +61,45 @@ export default function VideoMeet() {
   const location = useLocation();
   const [meetingTitle, setMeetingTitle] = useState(location.state?.title || "Loading...");
   const [attendeesCount, setAttendeesCount] = useState(0);
+
+  // 1. Copy state for in-call floating pill
+  const [copiedCode, setCopiedCode] = useState(false);
+  const meetingCode = window.location.pathname.split("/").filter(Boolean).pop();
+
+  // 2. Fallback copy implementation
+  const fallbackCopy = (text) => {
+    try {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.left = "-999999px";
+      textArea.style.top = "-999999px";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textArea);
+      setCopiedCode(true);
+      setTimeout(() => setCopiedCode(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy code:", err);
+    }
+  };
+
+  // 3. Primary copy handler
+  const handleCopyCode = () => {
+    if (navigator?.clipboard?.writeText) {
+      navigator.clipboard.writeText(meetingCode)
+        .then(() => {
+          setCopiedCode(true);
+          setTimeout(() => setCopiedCode(false), 2000);
+        })
+        .catch(() => fallbackCopy(meetingCode));
+    } else {
+      fallbackCopy(meetingCode);
+    }
+  };
+
 
   useEffect(() => {
     const fetchMeetingInfo = async () => {
@@ -628,6 +668,22 @@ export default function VideoMeet() {
       ) : (
         <div className={styles.mainContainer}>
           <div className={styles.meetVideoContainer}>
+            <div className={styles.meetingInfoPill}>
+              <div className={styles.pillTitleSection}>
+                <span className={styles.pillDot}></span>
+                <span className={styles.pillTitle} title={meetingTitle}>{meetingTitle}</span>
+              </div>
+              <div className={styles.pillDivider}></div>
+              <button
+                type="button"
+                className={styles.pillCopyBtn}
+                onClick={handleCopyCode}
+                title="Click to copy meeting code"
+              >
+                <ContentCopyIcon style={{ fontSize: "0.95rem" }} />
+                <span>{copiedCode ? "Code Copied! ✓" : meetingCode}</span>
+              </button>
+            </div>
             <div className={styles.buttonContainer}>
               {isRecording && (
                 <div style={{
