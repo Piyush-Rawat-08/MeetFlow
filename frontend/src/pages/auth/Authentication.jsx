@@ -1,10 +1,10 @@
 import * as React from "react";
-import { AuthContext } from "../contexts/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 import { Snackbar } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import "../styles/AuthPage.css";
-import "../styles/MeetFlow_DesignSystem.css";
+import "./AuthPage.css";
+import "../../styles/MeetFlow_DesignSystem.css";
 
 export default function Authentication() {
   const [username, setUsername] = React.useState("");

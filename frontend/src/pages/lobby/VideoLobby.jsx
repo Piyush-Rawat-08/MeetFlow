@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from '../styles/videoMeet.module.css';
+import './videoLobby.css';
 import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
 import VideocamIcon from '@mui/icons-material/Videocam';
@@ -35,7 +35,7 @@ export default function VideoLobby({
             textArea.focus();
             textArea.select();
 
-            document.exeCommand("copy");
+            document.execCommand("copy");
             document.body.removeChild(textArea);
             setCopied(true);
             setTimeout(() => setCopied(false), 2000);
@@ -79,25 +79,25 @@ export default function VideoLobby({
     }
 
     return (
-        <div className={styles.lobbyContainer}>
-            <div className={styles.lobbyCard}>
-                <div className={styles.lobbyMeetingInfo}>
-                    <div className={styles.lobbyLogoContainer}>
+        <div className="lobbyContainer">
+            <div className="lobbyCard">
+                <div className="lobbyMeetingInfo">
+                    <div className="lobbyLogoContainer">
                         <img
                             src="/meetflow_logo.png"
                             alt="MeetFlow Logo"
-                            className={styles.lobbyLogo}
+                            className="lobbyLogo"
                         />
-                        <span className={styles.lobbyLogoText}>MeetFlow</span>
+                        <span className="lobbyLogoText">MeetFlow</span>
                     </div>
-                    <h2 className={styles.meetingTitle}>{meetingTitle}</h2>
-                    <div className={styles.meetingDetails}>
-                        <span className={styles.detailBadge}>
-                            <span className={styles.pulseDot}></span>
+                    <h2 className="meetingTitle">{meetingTitle}</h2>
+                    <div className="meetingDetails">
+                        <span className="detailBadge">
+                            <span className="pulseDot"></span>
                             Ready to Join
                         </span>
                         {attendeesCount > 0 && (
-                            <span className={styles.detailBadge}>
+                            <span className="detailBadge">
                                 {attendeesCount} waiting
                             </span>
                         )}
@@ -105,7 +105,7 @@ export default function VideoLobby({
                     <button
                         type="button"
                         onClick={handleCopyCode}
-                        className={styles.lobbyCopyBtn}
+                        className="lobbyCopyBtn"
                         title="Click to copy meeting code"
                     >
                         <ContentCopyIcon style={{ fontSize: "0.95rem" }} />
@@ -113,8 +113,8 @@ export default function VideoLobby({
                     </button>
                 </div>
 
-                <div className={styles.videoPreviewWrapper}>
-                    <video className={styles.videoPreview}
+                <div className="videoPreviewWrapper">
+                    <video className="videoPreview"
                         ref={(ref) => {
                             if (ref) {
                                 localVideoRef.current = ref;
@@ -127,34 +127,32 @@ export default function VideoLobby({
                         muted
                     ></video>
                 </div>
-                <div className={styles.controlButtons}>
+                <div className="controlButtons">
                     <button className=
-                        {`${styles.roundBtn} 
-                      ${!audioAvailable ? styles.roundBtnDanger : ''}`}
+                        {`roundBtn ${!audioAvailable ? 'roundBtnDanger' : ''}`}
                         onClick={toggleAudio}
                     >
                         {audioAvailable ? <MicIcon /> : <MicOffIcon />}
                     </button>
 
                     <button className=
-                        {`${styles.roundBtn} 
-                      ${!videoAvailable ? styles.roundBtnDanger : ''}`}
+                        {`roundBtn ${!videoAvailable ? 'roundBtnDanger' : ''}`}
                         onClick={toggleVideo}
                     >
                         {videoAvailable ? <VideocamIcon /> : <VideocamOffIcon />}
                     </button>
                 </div>
 
-                <div className={styles.joinSection}>
+                <div className="joinSection">
                     <input
                         type="text"
-                        className={styles.nameInput}
+                        className="nameInput"
                         placeholder="Enter your name"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
                     <button
-                        className={styles.joinBtn}
+                        className="joinBtn"
                         onClick={connect}
                     >
                         Join Meeting

@@ -1,0 +1,174 @@
+.meetVideoContainer {
+    position: relative;
+    flex: 1;
+    background: rgb(70, 74, 131);
+    transition: all 0.3s ease-in-out;
+}
+
+.meetVideoContainer>.meetUserVideo {
+    position: absolute;
+    bottom: 10vh;
+    height: 30vh;
+    width: auto;
+    left: 0;
+    border-radius: 20px;
+    z-index: 10;
+}
+
+.buttonContainer {
+    position: absolute;
+    width: 100vw;
+    bottom: 0;
+    text-align: center;
+    z-index: 10;
+}
+
+.buttonContainer svg {
+    font-size: 3rem;
+}
+
+.conferenceView {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+    padding: 25px;
+    gap: 50px;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.conferenceVideo {
+    width: 30vw;
+    height: 40vh;
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+.expandedVideo {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.mainContainer {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.chatContainer {
+    width: 400px;
+    flex-shrink: 0;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid #ccc;
+    transition: all 0.3s ease-in-out;
+    z-index: 20;
+}
+
+.chatHeader {
+    padding: 15px;
+    background-color: rgb(163, 23, 121);
+    border-bottom: 1px solid #e0e0e0;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chatMessages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.chatInputContainer {
+    padding: 15px;
+    background-color: #fff;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    gap: 10px;
+}
+
+/* Floating Meeting Info & Copy Pill (Top-Left of Screen) */
+.meetingInfoPill {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 30px;
+    padding: 6px 14px;
+    gap: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.pillTitleSection {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 200px;
+}
+
+.pillDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #10B981;
+    box-shadow: 0 0 8px #10B981;
+    flex-shrink: 0;
+}
+
+.pillTitle {
+    color: #F8FAFC;
+    font-size: 0.88rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pillDivider {
+    width: 1px;
+    height: 16px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.pillCopyBtn {
+    background: rgba(139, 92, 246, 0.2);
+    border: 1px solid rgba(139, 92, 246, 0.4);
+    color: #C4B5FD;
+    padding: 4px 10px;
+    border-radius: 16px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pillCopyBtn:hover {
+    background: rgba(139, 92, 246, 0.35);
+    color: #FFFFFF;
+}

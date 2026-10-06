@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import styles from '../styles/videoMeet.module.css';
+import styles from './videoMeet.module.css';
 
 function VideoComponent({ localVideoRef, videos }) {
   return (

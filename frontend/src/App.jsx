@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LandingPage from "./pages/landingPage";
-import Authentication from "./pages/Authentication";
-import { AuthProvider } from "./contexts/AuthContext";
-import HomeComponent from "./pages/home";
-import VideoMeet from "./pages/videoMeet";
+import LandingPage from "./pages/landing/LandingPage";
+import Authentication from "./pages/auth/Authentication";
+import { AuthProvider } from "./context/AuthContext";
+import HomeComponent from "./pages/home/Home";
+import VideoMeet from "./pages/meet/VideoMeet";
 
 
 function App() {

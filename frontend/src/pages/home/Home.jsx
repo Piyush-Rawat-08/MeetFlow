@@ -1,10 +1,10 @@
 import React from 'react'
 import { useState, useEffect, useContext } from 'react';
-import withAuth from '../utils/withAuth';
-import "../styles/home.css";
-import "../styles/MeetFlow_DesignSystem.css";
+import withAuth from '../../utils/withAuth';
+import "./home.css";
+import "../../styles/MeetFlow_DesignSystem.css";
 import { useNavigate } from "react-router-dom";
-import { AuthContext, client } from "../contexts/AuthContext";
+import { AuthContext, client } from "../../context/AuthContext";
 
 
 

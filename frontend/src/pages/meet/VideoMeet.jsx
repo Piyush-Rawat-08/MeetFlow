@@ -14,15 +14,16 @@ import ChatIcon from "@mui/icons-material/Chat";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import StopCircleIcon from "@mui/icons-material/StopCircle";
 import { io } from "socket.io-client";
-import styles from "../styles/videoMeet.module.css";
-import ChatBox from "../components/ChatBox";
-import VideoComponent from "../components/VideoComponent";
-import VideoLobby from "../components/videoLobby";
-import { client } from "../contexts/AuthContext";
+import styles from "./videoMeet.module.css";
+import ChatBox from "./ChatBox";
+import VideoComponent from "./VideoComponent";
+import VideoLobby from "../lobby/VideoLobby";
+import { client } from "../../context/AuthContext";
+import { server } from "../../config/environment";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 
-const server_url = "http://localhost:8000";
+const server_url = server;
 
 let connections = {};
 let pendingCandidates = {};
