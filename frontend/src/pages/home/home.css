@@ -248,10 +248,12 @@
 .home-content::-webkit-scrollbar {
     width: 8px;
 }
+
 .home-content::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 4px;
 }
+
 .home-content::-webkit-scrollbar-track {
     background: transparent;
 }
@@ -550,4 +552,132 @@
     margin-right: 5px;
     margin-top: 5.4px;
     margin-left: -15px;
+}
+
+@media (max-width: 768px) {
+
+    /* 1. Main outer container scrolling */
+    .home-minimal-container {
+        height: auto;
+        min-height: 100dvh;
+        overflow-y: auto;
+    }
+
+    /* 2. Top Header */
+    .home-header {
+        padding: 1rem;
+        height: auto;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    .welcome-text {
+        display: none;
+        /* Hide to save header space on phones */
+    }
+
+    .header-actions {
+        gap: 1rem;
+    }
+
+    /* 3. Layout switches from horizontal row to vertical column */
+    .dashboard-layout {
+        flex-direction: column;
+        gap: 0;
+        overflow: visible;
+    }
+
+    /* 4. Sidebar becomes a horizontal top/sub navigation bar */
+    .sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        align-items: center;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 0.6rem 0.8rem;
+        overflow-x: auto;
+        box-sizing: border-box;
+    }
+
+    .sidebar-logo {
+        display: none;
+    }
+
+    .sidebar-nav {
+        flex-direction: row;
+        gap: 0.5rem;
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 2px;
+    }
+
+    .sidebar-nav li {
+        padding: 8px 12px;
+        font-size: 0.88rem;
+        flex-shrink: 0;
+    }
+
+    /* Hide bottom logout block in sidebar on mobile (use header profile dropdown) */
+    .sidebar .sidebar-nav:last-of-type {
+        display: none;
+    }
+
+    /* 5. Main Content Area */
+    .home-content {
+        padding: 1.25rem 1rem 3rem 1rem;
+        overflow-y: visible;
+        gap: 1.5rem;
+    }
+
+    /* 6. Dashboard Action Cards (New Meeting, Join, Schedule) */
+    .actions-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+
+    .action-box {
+        padding: 1.5rem 1.2rem;
+    }
+
+    /* 7. Meeting Cards & Details */
+    .dash-meeting-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 1rem;
+    }
+
+    .dash-meeting-card button {
+        width: 100%;
+    }
+
+    /* 8. Table Container for Scheduled & History tabs */
+    .history-section {
+        padding: 1rem 0.5rem;
+    }
+
+    .history-table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+    }
+
+    .custom-table th,
+    .custom-table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.82rem;
+    }
+
+    /* 9. Dropdown menus alignment on mobile */
+    .profile-dropdown {
+        right: 0;
+        width: 200px;
+    }
+
+    .notification-dropdown {
+        right: -40px;
+        width: 260px;
+    }
 }

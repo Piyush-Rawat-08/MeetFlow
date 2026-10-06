@@ -172,3 +172,113 @@
     background: rgba(139, 92, 246, 0.35);
     color: #FFFFFF;
 }
+
+@media (max-width: 768px) {
+
+    /* 1. Main Call Container */
+    .mainContainer {
+        height: 100dvh;
+        width: 100vw;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* 2. Conference Video Layout */
+    .conferenceView {
+        padding: 70px 10px 90px 10px;
+        gap: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* 3. Each Participant Video Card */
+    .conferenceVideo {
+        width: 100%;
+        max-width: 95vw;
+        height: auto;
+        aspect-ratio: 16 / 9;
+        border-radius: 14px;
+        object-fit: cover;
+    }
+
+    /* 4. Local User Floating PIP (Picture-in-Picture) */
+    .meetVideoContainer>.meetUserVideo {
+        position: absolute;
+        bottom: 85px;
+        right: 14px;
+        left: auto;
+        width: 100px;
+        height: 140px;
+        border-radius: 12px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        z-index: 15;
+        object-fit: cover;
+    }
+
+    /* 5. Bottom Meeting Controls Bar */
+    .buttonContainer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 70px;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        background: rgba(15, 23, 42, 0.88);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        padding: 0 6px;
+        box-sizing: border-box;
+        z-index: 25;
+    }
+
+    /* Scale down button icons from desktop 3rem to phone friendly 1.5rem */
+    .buttonContainer svg {
+        font-size: 1.55rem;
+    }
+
+    .buttonContainer button {
+        padding: 8px;
+    }
+
+    /* 6. Top Meeting Pill Header */
+    .meetingInfoPill {
+        top: 12px;
+        left: 12px;
+        right: 12px;
+        max-width: calc(100vw - 24px);
+        padding: 5px 12px;
+        justify-content: space-between;
+        box-sizing: border-box;
+    }
+
+    .pillTitleSection {
+        max-width: 150px;
+    }
+
+    .pillTitle {
+        font-size: 0.8rem;
+    }
+
+    .pillCopyBtn {
+        padding: 4px 8px;
+        font-size: 0.75rem;
+    }
+
+    /* 7. Chat Drawer takes full screen overlay on mobile */
+    .chatContainer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100dvh;
+        z-index: 50;
+    }
+}
