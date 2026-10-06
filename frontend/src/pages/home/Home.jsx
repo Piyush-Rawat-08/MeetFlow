@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect, useContext } from 'react';
 import withAuth from '../../utils/withAuth';
-import "./Home.css";
+import "./home.css";
 import "../../styles/MeetFlow_DesignSystem.css";
 import { useNavigate } from "react-router-dom";
 import { AuthContext, client } from "../../context/AuthContext";
