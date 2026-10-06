@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './videoLobby.css';
+import './VideoLobby.css';
 import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
 import VideocamIcon from '@mui/icons-material/Videocam';

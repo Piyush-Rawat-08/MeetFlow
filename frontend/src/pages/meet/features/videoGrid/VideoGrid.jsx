@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
-import styles from './videoMeet.module.css';
+import styles from '../../videoMeet.module.css';
 
-function VideoComponent({ localVideoRef, videos }) {
+function VideoGrid({ localVideoRef, videos }) {
   return (
     <>
       <video
@@ -37,4 +37,4 @@ function VideoComponent({ localVideoRef, videos }) {
     </>
   );
 }
-export default memo(VideoComponent);
+export default memo(VideoGrid);

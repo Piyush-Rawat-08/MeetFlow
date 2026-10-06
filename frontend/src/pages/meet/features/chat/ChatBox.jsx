@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { IconButton, TextField, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import styles from './videoMeet.module.css';
+import styles from '../../videoMeet.module.css';
 
 export default function ChatBox({ closeChat, messages, socket, username }) {
   const messageRef = useRef();
