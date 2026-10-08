@@ -565,10 +565,19 @@
 
     /* 2. Top Header */
     .home-header {
-        padding: 1rem;
-        height: auto;
+        padding: 0 12px;
+        height: 50px;
         flex-wrap: wrap;
         gap: 0.75rem;
+    }
+
+    .brand-logo-img {
+        width: 28px !important;
+        height: 28px !important;
+    }
+
+    .logo-text {
+        font-size: 1.15rem !important;
     }
 
     .welcome-text {
@@ -577,7 +586,7 @@
     }
 
     .header-actions {
-        gap: 1rem;
+        gap: 0.85rem;
     }
 
     /* 3. Layout switches from horizontal row to vertical column */
@@ -670,14 +679,31 @@
         font-size: 0.82rem;
     }
 
+    /* Mobile avatar size */
+    .profile-avatar {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 0.9rem !important;
+    }
+
+    .notification-icon {
+        font-size: 1.2rem !important;
+        margin-right: 4px !important;
+    }
+
     /* 9. Dropdown menus alignment on mobile */
     .profile-dropdown {
-        right: 0;
-        width: 200px;
+        top: 44px !important;
+        right: 0 !important;
+        width: 200px !important;
+        padding: 1rem !important;
+        border-radius: 12px !important;
     }
 
     .notification-dropdown {
-        right: -40px;
-        width: 260px;
+        top: 44px !important;
+        right: 40px !important;
+        width: calc(100vw - 32px) !important;
+        max-width: 300px !important;
     }
 }

@@ -5,6 +5,7 @@ export default function HomeHeader({
     userEmail,
     upcomingMeetings,
     onTabChange,
+    onLogout,
 }) {
     const [showProfileMenu, setShowProfileMenu] = useState(false);
     const [showNotifications, setShowNotifications] = useState(false);
@@ -70,6 +71,17 @@ export default function HomeHeader({
                                 <h4>{userId}</h4>
                                 <p className="user-email">{userEmail}</p>
                             </div>
+                            <hr className="dropdown-divider" />
+
+                            <button type="button" className="dropdown-logout-btn" onClick={() => {
+                                setShowProfileMenu(false);
+                                if (onLogout) {
+                                    onLogout();
+                                }
+                            }}>
+                                <i className="fa-solid fa-right-from-bracket"></i>
+                                Logout
+                            </button>
                         </div>
                     )}
                 </div>

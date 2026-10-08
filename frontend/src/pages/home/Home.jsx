@@ -207,6 +207,7 @@ function HomeComponent() {
                 userEmail={userEmail}
                 upcomingMeetings={upcomingMeetings}
                 onTabChange={handleSidebarClick}
+                onLogout={handleLogout}
             />
 
             {/* Split Screen Dashboard Layout */}
