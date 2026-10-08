@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect, useRef, useState, } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import { client } from "../../../../context/AuthContext.jsx";
 import { server } from "../../../../config/environment.js";
@@ -35,6 +35,8 @@ export function useWebRTC() {
   const [videos, setVideos] = useState([]);
 
   const location = useLocation();
+  const navigate = useNavigate();
+
   const [meetingTitle, setMeetingTitle] = useState(location.state?.title || "Loading...");
   const [attendeesCount, setAttendeesCount] = useState(0);
 
@@ -436,21 +438,36 @@ export function useWebRTC() {
       }
       if (window.localStream) {
         window.localStream.getTracks().forEach((track) => track.stop());
+        window.localStream = null;
+      }
+      Object.keys(connections).forEach((key) => {
+        if (connections[key]) {
+          connections[key].close();
+          delete connections[key];
+        }
+      });
+      if (socketRef.current) {
+        socketRef.current.disconnect();
       }
       const loggedInUser = localStorage.getItem("username");
       const currentMeetingCode = window.location.pathname.split("/").pop();
       if (loggedInUser && meetingTitle && meetingTitle !== "Loading...") {
-        await client.post("/add_to_activity", {
+        client.post("/add_to_activity", {
           user_id: loggedInUser,
           meeting_id: currentMeetingCode,
           title: meetingTitle,
           isScheduled: false,
-        });
+        }).catch((err) => console.log("Failed to log activity: ", err));
       }
     } catch (e) {
-      console.log(e);
+      console.log("Error during call end cleanup", e);
+    } finally {
+      try {
+        navigate("/home");
+      } catch {
+        window.location.href = "/home";
+      }
     }
-    navigate("/home");
   };
 
   const openChat = () => {

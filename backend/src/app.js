@@ -26,7 +26,10 @@ app.use("/api/users", userRoutes);
 
 const start = async () => {
     try {
-        const url = process.env.MONGO_URI || "mongodb+srv://rawatpiyush2023_db_user:ruUfiEmt62oOOpfB@zoomclone.vhn1oyn.mongodb.net/?appName=ZoomClone";
+        const url = process.env.MONGO_URI || process.env.MONGO_URL;
+        if (!url) {
+            throw new Error("MONGO_URI is not defined in environment variables");
+        }
         await mongoose.connect(url, {
             serverSelectionTimeoutMS: 5000,
         });
