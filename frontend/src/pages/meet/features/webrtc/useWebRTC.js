@@ -433,19 +433,26 @@ export function useWebRTC() {
       if (onBeforeEnd) {
         onBeforeEnd();
       }
-      if (localVideoRef.current?.srcObject) {
-        localVideoRef.current.srcObject.getTracks().forEach((track) => track.stop());
+
+      if (localVideoRef.current) {
+        if (localVideoRef.current?.srcObject) {
+          localVideoRef.current.srcObject.getTracks().forEach((track) => track.stop());
+        }
+        localVideoRef.current.srcObject = null;
       }
+
       if (window.localStream) {
         window.localStream.getTracks().forEach((track) => track.stop());
         window.localStream = null;
       }
+
       Object.keys(connections).forEach((key) => {
         if (connections[key]) {
           connections[key].close();
           delete connections[key];
         }
       });
+
       if (socketRef.current) {
         socketRef.current.disconnect();
       }
@@ -462,10 +469,12 @@ export function useWebRTC() {
     } catch (e) {
       console.log("Error during call end cleanup", e);
     } finally {
+      const token = localStorage.getItem("token");
+      const targetDestination = token ? "/home" : "/";
       try {
-        navigate("/home");
+        navigate(targetDestination);
       } catch {
-        window.location.href = "/home";
+        window.location.replace(targetDestination);
       }
     }
   };

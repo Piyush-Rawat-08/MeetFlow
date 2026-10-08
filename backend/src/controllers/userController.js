@@ -38,18 +38,24 @@ const loginUser = async (req, res) => {
 const registerUser = async (req, res) => {
   const { email, username, password } = req.body;
 
+  if (!email || !username || !password) {
+    return res
+      .status(httpStatus.BAD_REQUEST)
+      .json({ message: "Please provide email, username, and password" });
+  }
+
   try {
-    const existingUser = await User.findOne({ username: req.body.username });
+    const existingUser = await User.findOne({ username });
     if (existingUser) {
       return res
         .status(httpStatus.FOUND)
         .json({ message: "User already exists" });
     }
-    const hashPassword = await bcrypt.hash(req.body.password, 10);
+    const hashPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
-      email: req.body.email,
-      username: req.body.username,
+      email: email,
+      username: username,
       password: hashPassword,
     });
 
