@@ -393,7 +393,7 @@ export function useWebRTC() {
             if (id2 === socketIdRef.current) continue;
             try {
               connections[id2].addStream(window.localStream);
-            } catch (e) {}
+            } catch (e) { }
             makeOffer(id2);
           }
         }
@@ -450,7 +450,7 @@ export function useWebRTC() {
     } catch (e) {
       console.log(e);
     }
-    window.location.href = "/home";
+    navigate("/home");
   };
 
   const openChat = () => {
