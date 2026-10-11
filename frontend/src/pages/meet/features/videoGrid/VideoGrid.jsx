@@ -9,13 +9,14 @@ function VideoGrid({ localVideoRef, videos }) {
         ref={(ref) => {
           if (ref) {
             localVideoRef.current = ref;
-            if (ref.srcObject !== window.localStream) {
+            if (!ref.srcObject && window.localStream) {
               ref.srcObject = window.localStream;
             }
           }
         }}
         autoPlay
         muted
+        playsInline
       ></video>
       <div className={styles.conferenceView}>
         {videos.map((video) => (
@@ -26,6 +27,9 @@ function VideoGrid({ localVideoRef, videos }) {
               ref={(ref) => {
                 if (ref && video.stream && ref.srcObject !== video.stream) {
                   ref.srcObject = video.stream;
+                  ref.play().catch((err) => {
+                    console.log("Autoplay error caught", err);
+                  });
                 }
               }}
               autoPlay

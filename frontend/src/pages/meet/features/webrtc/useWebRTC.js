@@ -204,14 +204,16 @@ export function useWebRTC() {
         }
         peerStream.addTrack(event.track);
       }
+      const fullStream = new MediaStream(peerStream.getTracks());
+      remoteStreamsRef.current[targetSocketId] = fullStream;
       setVideos((currentVideos) => {
         const exists = currentVideos.some((v) => v.socketId === targetSocketId);
         if (exists) {
-          const updated = currentVideos.map((v) => v.socketId === targetSocketId ? { ...v, stream: peerStream } : v);
+          const updated = currentVideos.map((v) => v.socketId === targetSocketId ? { ...v, stream: fullStream } : v);
           videoRef.current = updated;
           return updated;
         } else {
-          const newVideo = { socketId: targetSocketId, stream: peerStream, autoPlay: true, playsInline: true };
+          const newVideo = { socketId: targetSocketId, stream: fullStream, autoPlay: true, playsInline: true };
           const updated = [...currentVideos, newVideo];
           videoRef.current = updated;
           return updated;
@@ -221,7 +223,7 @@ export function useWebRTC() {
     const activeStream = window.localStream || blackSilence();
     activeStream.getTracks().forEach((track) => {
       pc.addTrack(track, activeStream);
-    })
+    });
     return pc;
   };
 
@@ -230,7 +232,7 @@ export function useWebRTC() {
     console.log("Received signal from", fromId, ":", signal);
     if (fromId === socketIdRef.current) return;
 
-    const pc = connectionsRef.current[fromId];
+    let pc = connectionsRef.current[fromId];
 
     if (signal.sdp) {
       if (!pc) {
@@ -354,7 +356,7 @@ export function useWebRTC() {
 
   const stopScreenShare = () => {
     setScreen(false);
-    const camTrack = window.locaStream?.getVideoTracks()[0];
+    const camTrack = window.localStream?.getVideoTracks()[0];
     if (camTrack) {
       Object.values(connectionsRef.current).forEach((pc) => {
         const sender = pc.getSenders().find((s) => s.track && s.track.kind === "video");
