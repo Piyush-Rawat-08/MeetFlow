@@ -589,15 +589,15 @@
 
     /* 2. Top Header */
     .home-header {
-        padding: 0 12px;
-        height: 50px;
+        padding: 4px 16px;
+        height: 65px;
         flex-wrap: wrap;
         gap: 0.75rem;
     }
 
     .brand-logo-img {
-        width: 28px !important;
-        height: 28px !important;
+        width: 30px !important;
+        height: 30px !important;
     }
 
     .logo-text {
