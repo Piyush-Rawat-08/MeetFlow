@@ -15,8 +15,9 @@ const add_to_activity = async (req, res) => {
 
         const existingMeeting = await Meeting.findOne({ user_id, meeting_id });
         if (existingMeeting) {
-            existingMeeting.status = "ongoing";
-
+            if (existingMeeting.status !== "completed") {
+                existingMeeting.status = "ongoing";
+            }
             if (title && title !== "Joined Meeting") {
                 existingMeeting.title = title;
             }
