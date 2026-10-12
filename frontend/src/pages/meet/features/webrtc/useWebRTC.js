@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import { client } from "../../../../context/AuthContext.jsx";
 import { server } from "../../../../config/environment.js";
-import { peerConfigConnections } from "./webrtcConfig.js";
+import { getFreshIceServers, peerConfigConnections } from "./webrtcConfig.js";
 import { blackSilence } from "./dummyStreams.js";
 
 const server_url = server;
@@ -40,6 +40,10 @@ export function useWebRTC() {
   const [attendeesCount, setAttendeesCount] = useState(0);
 
   const meetingCode = window.location.pathname.split("/").filter(Boolean).pop();
+
+  useEffect(() => {
+    getFreshIceServers();
+  }, []);
 
   useEffect(() => {
     const fetchMeetingInfo = async () => {
