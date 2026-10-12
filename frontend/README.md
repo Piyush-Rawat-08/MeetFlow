@@ -1,16 +1,47 @@
-# React + Vite
+# MeetFlow — Frontend Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This directory contains the React 19 frontend application for **MeetFlow**, a real-time WebRTC video conferencing platform.
 
-Currently, two official plugins are available:
+For full project architecture, backend configuration, and deployment guides, please see the [Main Project README](../README.md).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 💻 Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Framework**: React 19 (React Scripts / Vite)
+- **Component Library**: Material-UI (MUI v9) & Emotion
+- **Routing**: React Router DOM (v7)
+- **Real-Time Client**: Socket.io Client
+- **HTTP Client**: Axios
+- **Design System**: Custom responsive design system (`src/styles/MeetFlow_DesignSystem.css`)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🚀 Running Locally
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+2. Configure backend URL in `src/config/environment.js`:
+   ```javascript
+   let IS_PROD = false; // Set to true for live server, false for localhost
+   export const server = IS_PROD ? "https://meetflow-aosr.onrender.com" : "http://localhost:8000";
+   ```
+
+3. Start the application:
+   ```bash
+   npm start
+   ```
+
+---
+
+## 📁 Key Directories
+
+- `src/pages/meet/`: Core video conference interface, controls, video grid, and in-room chat.
+- `src/pages/meet/features/webrtc/`: WebRTC peer connection management, media streams, and ICE configuration.
+- `src/pages/meet/features/recording/`: In-browser screen and audio recording (`MediaRecorder` API).
+- `src/pages/lobby/`: Pre-meeting device check (camera, microphone, and room preview).
+- `src/pages/home/`: User dashboard, past meetings activity, scheduled sessions, and recorded video archives.
+- `src/context/AuthContext.jsx`: Authentication context and session state.
